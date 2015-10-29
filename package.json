@@ -1,0 +1,36 @@
+{
+  "name": "hapi-alive",
+  "version": "0.0.0",
+  "description": "Health route for your Hapi.js server",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/lab -a code -t 100 -L -r console -o stdout -r lcov -o coverage/lcov.info",
+    "test-html": "mkdir -p coverage && ./node_modules/.bin/lab -a code -t 100 -L -r html > coverage/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idosh/hapi-alive.git"
+  },
+  "keywords": [
+    "hapi",
+    "health",
+    "plugin",
+    "monitor"
+  ],
+  "author": "Ido Shamun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/idosh/hapi-alive/issues"
+  },
+  "homepage": "https://github.com/idosh/hapi-alive#readme",
+  "devDependencies": {
+    "code": "^1.5.0",
+    "hapi": "^11.0.2",
+    "lab": "^7.0.0"
+  },
+  "dependencies": {
+    "boom": "^2.10.0",
+    "hoek": "^2.16.3",
+    "joi": "^6.9.1"
+  }
+}
