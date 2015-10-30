@@ -3,7 +3,7 @@
 [![Code Climate](https://codeclimate.com/github/idosh/hapi-alive/badges/gpa.svg)](https://codeclimate.com/github/idosh/hapi-alive)
 [![Test Coverage](https://codeclimate.com/github/idosh/hapi-alive/badges/coverage.svg)](https://codeclimate.com/github/idosh/hapi-alive/coverage)
 
-> Health route for your Hapi.js server
+> Health route for your hapi.js server
 
 ## Usage
 
