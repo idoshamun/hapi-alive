@@ -1,14 +1,14 @@
 'use strict';
 
-var Hapi = require('hapi');
-var Code = require('code');
-var Lab = require('lab');
+const Hapi = require('hapi');
+const Code = require('code');
+const Lab = require('lab');
 
-var lab = exports.lab = Lab.script();
-var describe = lab.describe;
-var it = lab.it;
-var expect = Code.expect;
-var before = lab.before;
+const lab = exports.lab = Lab.script();
+const describe = lab.describe;
+const it = lab.it;
+const expect = Code.expect;
+const before = lab.before;
 
 /**
  * A callback function with error and server parameters
@@ -23,9 +23,9 @@ var before = lab.before;
  * @param {object} options Alive plugin options
  * @param {serverCallback} callback Callback function
  */
-var createServer = function (options, callback) {
+const createServer = function (options, callback) {
 
-    var server = new Hapi.Server({
+    const server = new Hapi.Server({
         debug: false
     });
     server.connection();
@@ -33,31 +33,31 @@ var createServer = function (options, callback) {
     server.register({
         register: require('../'),
         options: options
-    }, function (err) {
+    }, (err) => {
 
         callback(err, server);
     });
 };
 
-describe('Alive plugin with default options', function () {
+describe('Alive plugin with default options', () => {
 
-    var server;
+    let server;
 
-    before(function (done) {
+    before((done) => {
 
-        createServer(null, function (err, _server) {
+        createServer(null, (err, _server) => {
 
             server = _server;
             done(err);
         });
     });
 
-    it('should be healthy', function (done) {
+    it('should be healthy', (done) => {
 
         server.inject({
             method: 'GET',
             url: '/health'
-        }, function (res) {
+        }, (res) => {
 
             expect(res.statusCode).to.equal(200);
             done();
@@ -66,48 +66,49 @@ describe('Alive plugin with default options', function () {
 
 });
 
-describe('Alive plugin with custom options', function () {
+describe('Alive plugin with custom options', () => {
 
-    var server, shouldFail;
+    let server;
+    let shouldFail;
 
-    before(function (done) {
+    before((done) => {
 
         createServer({
             path: '/monitor/health',
-            healthCheck: function (_server, callback) {
+            healthCheck: (_server, callback) => {
 
                 if (shouldFail) {
                     return callback(new Error('Something went wrong!'));
                 }
                 callback();
             }
-        }, function (err, _server) {
+        }, (err, _server) => {
 
             server = _server;
             done(err);
         });
     });
 
-    it('should be healthy', function (done) {
+    it('should be healthy', (done) => {
 
         shouldFail = false;
         server.inject({
             method: 'GET',
             url: '/monitor/health'
-        }, function (res) {
+        }, (res) => {
 
             expect(res.statusCode).to.equal(200);
             done();
         });
     });
 
-    it('should not be healthy', function (done) {
+    it('should not be healthy', (done) => {
 
         shouldFail = true;
         server.inject({
             method: 'GET',
             url: '/monitor/health'
-        }, function (res) {
+        }, (res) => {
 
             expect(res.statusCode).to.equal(400);
             done();
