@@ -26,7 +26,7 @@ server.register({
     options: {
         path: '/health' //Health route path
         tags: ['health', 'monitor'],
-        healthCheck: function(callback) {
+        healthCheck: function(server, callback) {
             //Here you should preform your health checks
             //If something went wrong provide the callback with an error
             callback();

@@ -74,7 +74,7 @@ describe('Alive plugin with custom options', function () {
 
         createServer({
             path: '/monitor/health',
-            healthCheck: function (callback) {
+            healthCheck: function (_server, callback) {
 
                 if (shouldFail) {
                     return callback(new Error('Something went wrong!'));
