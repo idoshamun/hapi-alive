@@ -13,6 +13,30 @@
 npm install --save hapi-alive
 ```
 
+### Options
+
+The defaults are as described below. You can override any defaults by passing them in as options.
+
+```javascript
+const defaults = {
+    path: '/health',
+    tags: ['health', 'monitor'],
+    responses: {
+        healthy: {
+            message: 'I\'m healthy!!!'
+        },
+        unhealthy: {
+            statusCode: 400
+        }
+    },
+    healthCheck: function (_server, callback) {
+
+        callback();
+    },
+    auth: false
+};
+```
+
 ### Example
 
 ```javascript
