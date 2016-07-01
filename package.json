@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/idosh/hapi-alive.git"
+    "url": "git+https://github.com/idoshamun/hapi-alive.git"
   },
   "keywords": [
     "hapi",
@@ -20,9 +20,9 @@
   "author": "Ido Shamun",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/idosh/hapi-alive/issues"
+    "url": "https://github.com/idoshamun/hapi-alive/issues"
   },
-  "homepage": "https://github.com/idosh/hapi-alive#readme",
+  "homepage": "https://github.com/idoshamun/hapi-alive#readme",
   "devDependencies": {
     "code": "^3.0.1",
     "hapi": "^13.4.1",

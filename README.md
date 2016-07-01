@@ -1,7 +1,7 @@
 # hapi-alive
-[![Build Status](https://travis-ci.org/idosh/hapi-alive.svg)](https://travis-ci.org/idosh/hapi-alive)
-[![Code Climate](https://codeclimate.com/github/idosh/hapi-alive/badges/gpa.svg)](https://codeclimate.com/github/idosh/hapi-alive)
-[![Test Coverage](https://codeclimate.com/github/idosh/hapi-alive/badges/coverage.svg)](https://codeclimate.com/github/idosh/hapi-alive/coverage)
+[![Build Status](https://travis-ci.org/idoshamun/hapi-alive.svg)](https://travis-ci.org/idoshamun/hapi-alive)
+[![Code Climate](https://codeclimate.com/github/idoshamun/hapi-alive/badges/gpa.svg)](https://codeclimate.com/github/idoshamun/hapi-alive)
+[![Test Coverage](https://codeclimate.com/github/idoshamun/hapi-alive/badges/coverage.svg)](https://codeclimate.com/github/idoshamun/hapi-alive/coverage)
 
 > Health route for your hapi.js server
 
