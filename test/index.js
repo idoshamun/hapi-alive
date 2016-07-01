@@ -97,6 +97,7 @@ describe('Alive plugin with custom options', () => {
             url: '/monitor/health'
         }, (res) => {
 
+            expect(res.payload).to.equal('I\'m healthy!!!');
             expect(res.statusCode).to.equal(200);
             done();
         });
@@ -111,6 +112,66 @@ describe('Alive plugin with custom options', () => {
         }, (res) => {
 
             expect(res.statusCode).to.equal(400);
+            done();
+        });
+    });
+
+});
+
+describe('Alive plugin with overrides', () => {
+
+    let server;
+    let shouldFail;
+
+    before((done) => {
+
+        createServer({
+            path: '/monitor/health',
+            healthCheck: (_server, callback) => {
+
+                if (shouldFail) {
+                    return callback(new Error('Something went wrong!'));
+                }
+                callback();
+            },
+            responses: {
+                healthy: {
+                    message: 'OK'
+                },
+                unhealthy: {
+                    statusCode: 503
+                }
+            }
+        }, (err, _server) => {
+
+            server = _server;
+            done(err);
+        });
+    });
+
+    it('should be healthy', (done) => {
+
+        shouldFail = false;
+        server.inject({
+            method: 'GET',
+            url: '/monitor/health'
+        }, (res) => {
+
+            expect(res.payload).to.equal('OK');
+            expect(res.statusCode).to.equal(200);
+            done();
+        });
+    });
+
+    it('should not be healthy', (done) => {
+
+        shouldFail = true;
+        server.inject({
+            method: 'GET',
+            url: '/monitor/health'
+        }, (res) => {
+
+            expect(res.statusCode).to.equal(503);
             done();
         });
     });
