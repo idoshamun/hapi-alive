@@ -5,6 +5,11 @@
 
 > Health route for your hapi.js server
 
+## Requirements
+
+- Node 8+
+- Hapi 17+
+
 ## Usage
 
 ### Install from NPM
@@ -29,9 +34,9 @@ const defaults = {
             statusCode: 400
         }
     },
-    healthCheck: function (_server, callback) {
+    healthCheck: async function (_server) {
 
-        callback();
+        return await true;
     },
     auth: false
 };
@@ -42,31 +47,30 @@ const defaults = {
 ```javascript
 var Hapi = require('hapi');
 
-var server = new Hapi.Server();
-server.connection({ port: 3000 });
-// Register alive plugin
-server.register({
-    register: require('hapi-alive'),
-    options: {
-        path: '/health' //Health route path
-        tags: ['health', 'monitor'],
-        healthCheck: function(server, callback) {
-            //Here you should preform your health checks
-            //If something went wrong provide the callback with an error
-            callback();
+async function createServer() {
+    const server = Hapi.Server();
+
+    // Register alive plugin
+    await server.register({
+        plugin: require('hapi-alive'),
+        options: {
+            path: '/health' //Health route path
+            tags: ['health', 'monitor'],
+            healthCheck: async function(server) {
+                //Here you should preform your health checks
+                //If something went wrong , throw an error.
+                if (somethingFailed) {
+                    throw new Error('Server not healthy');
+                }
+                return await true;
+            }
         }
-    }
-}, function (err) {
+    });
 
-    if(err){
-      console.log(err);
-    }
-});
+    await server.start();
 
-server.start(function () {
-
-  console.log('Server running at:', server.info.uri);
-});
+    console.log('Server running at:', server.info.uri);
+}
 ```
 
 ### Calling the health route
@@ -76,3 +80,11 @@ The health route is exposed using `GET` method in a given path (`/health` by def
 When the server is healthy the response status code should be 200.
 
 When the health check returns error the status code should be 400 and the payload should contain the error title.
+
+### Change Log
+- v2.0.0 (Nov. 30th, 2017) Upgrade to Hapi 17
+  - Hapi.js 17 suite of tool upgraded to latest.
+  - healthCheck API converted to async/await pattern. Callback is no longer accepted.
+- v1.2.0
+- v1.1.0
+- v1.0.0

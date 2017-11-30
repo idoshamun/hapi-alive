@@ -3,6 +3,7 @@
 const Hapi = require('hapi');
 const Code = require('code');
 const Lab = require('lab');
+const Alive = require('../');
 
 const lab = exports.lab = Lab.script();
 const describe = lab.describe;
@@ -11,57 +12,40 @@ const expect = Code.expect;
 const before = lab.before;
 
 /**
- * A callback function with error and server parameters
- *
- * @callback serverCallback
- * @param {Error} error
- * @param {Hapi.Server} server
- */
-
-/**
  * Create a server with alive plugin
  * @param {object} options Alive plugin options
- * @param {serverCallback} callback Callback function
+ * @returns {object} Hapi.js server
  */
-const createServer = function (options, callback) {
+const createServer = async function (options) {
 
-    const server = new Hapi.Server({
+    const server = Hapi.Server({
         debug: false
     });
-    server.connection();
 
-    server.register({
-        register: require('../'),
-        options: options
-    }, (err) => {
-
-        callback(err, server);
+    await server.register({
+        plugin: Alive,
+        options
     });
+
+    return server;
 };
 
 describe('Alive plugin with default options', () => {
 
     let server;
 
-    before((done) => {
+    before(async () => {
 
-        createServer(null, (err, _server) => {
-
-            server = _server;
-            done(err);
-        });
+        server = await createServer(null);
     });
 
-    it('should be healthy', (done) => {
+    it('should be healthy', async () => {
 
-        server.inject({
+        const res = await server.inject({
             method: 'GET',
             url: '/health'
-        }, (res) => {
-
-            expect(res.statusCode).to.equal(200);
-            done();
         });
+        expect(res.statusCode).to.equal(200);
     });
 
 });
@@ -71,49 +55,43 @@ describe('Alive plugin with custom options', () => {
     let server;
     let shouldFail;
 
-    before((done) => {
+    before(async () => {
 
-        createServer({
+        server = await createServer({
             path: '/monitor/health',
-            healthCheck: (_server, callback) => {
+            healthCheck: async (_server) => {
 
                 if (shouldFail) {
-                    return callback(new Error('Something went wrong!'));
+                    throw new Error('Something went wrong!');
                 }
-                callback();
+                return await true;
             }
-        }, (err, _server) => {
-
-            server = _server;
-            done(err);
         });
     });
 
-    it('should be healthy', (done) => {
+    it('should be healthy', async () => {
 
         shouldFail = false;
-        server.inject({
+
+        const res = await server.inject({
             method: 'GET',
             url: '/monitor/health'
-        }, (res) => {
-
-            expect(res.payload).to.equal('I\'m healthy!!!');
-            expect(res.statusCode).to.equal(200);
-            done();
         });
+
+        expect(res.payload).to.equal('I\'m healthy!!!');
+        expect(res.statusCode).to.equal(200);
     });
 
-    it('should not be healthy', (done) => {
+    it('should not be healthy', async () => {
 
         shouldFail = true;
-        server.inject({
+
+        const res = await server.inject({
             method: 'GET',
             url: '/monitor/health'
-        }, (res) => {
-
-            expect(res.statusCode).to.equal(400);
-            done();
         });
+
+        expect(res.statusCode).to.equal(400);
     });
 
 });
@@ -123,16 +101,16 @@ describe('Alive plugin with overrides', () => {
     let server;
     let shouldFail;
 
-    before((done) => {
+    before(async () => {
 
-        createServer({
+        server = await createServer({
             path: '/monitor/health',
-            healthCheck: (_server, callback) => {
+            healthCheck: async (_server) => {
 
                 if (shouldFail) {
-                    return callback(new Error('Something went wrong!'));
+                    throw new Error('Something went wrong!');
                 }
-                callback();
+                return await true;
             },
             responses: {
                 healthy: {
@@ -142,38 +120,32 @@ describe('Alive plugin with overrides', () => {
                     statusCode: 503
                 }
             }
-        }, (err, _server) => {
-
-            server = _server;
-            done(err);
         });
     });
 
-    it('should be healthy', (done) => {
+    it('should be healthy', async () => {
 
         shouldFail = false;
-        server.inject({
+
+        const res = await server.inject({
             method: 'GET',
             url: '/monitor/health'
-        }, (res) => {
-
-            expect(res.payload).to.equal('OK');
-            expect(res.statusCode).to.equal(200);
-            done();
         });
+
+        expect(res.payload).to.equal('OK');
+        expect(res.statusCode).to.equal(200);
     });
 
-    it('should not be healthy', (done) => {
+    it('should not be healthy', async () => {
 
         shouldFail = true;
-        server.inject({
+
+        const res = await server.inject({
             method: 'GET',
             url: '/monitor/health'
-        }, (res) => {
-
-            expect(res.statusCode).to.equal(503);
-            done();
         });
+
+        expect(res.statusCode).to.equal(503);
     });
 
 });
