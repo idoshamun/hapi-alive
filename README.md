@@ -48,7 +48,7 @@ server.connection({ port: 3000 });
 server.register({
     register: require('hapi-alive'),
     options: {
-        path: '/health' //Health route path
+        path: '/health', //Health route path
         tags: ['health', 'monitor'],
         healthCheck: function(server, callback) {
             //Here you should preform your health checks
