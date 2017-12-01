@@ -54,7 +54,7 @@ async function createServer() {
     await server.register({
         plugin: require('hapi-alive'),
         options: {
-            path: '/health' //Health route path
+            path: '/health', //Health route path
             tags: ['health', 'monitor'],
             healthCheck: async function(server) {
                 //Here you should preform your health checks
