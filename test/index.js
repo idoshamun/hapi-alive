@@ -64,6 +64,7 @@ describe('Alive plugin with custom options', () => {
                 if (shouldFail) {
                     throw new Error('Something went wrong!');
                 }
+
                 return await true;
             }
         });
@@ -110,6 +111,7 @@ describe('Alive plugin with overrides', () => {
                 if (shouldFail) {
                     throw new Error('Something went wrong!');
                 }
+
                 return await true;
             },
             responses: {
