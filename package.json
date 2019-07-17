@@ -25,12 +25,12 @@
   "homepage": "https://github.com/idoshamun/hapi-alive#readme",
   "devDependencies": {
     "code": "^5.2.4",
-    "hapi": "^17.8.1",
+    "@hapi/hapi": "^18.3.1",
     "lab": "^17.3.0"
   },
   "dependencies": {
-    "boom": "^7.3.0",
-    "hoek": "^6.1.2",
-    "joi": "^14.3.1"
+    "@hapi/boom": "^7.4.2",
+    "@hapi/hoek": "^8.0.2",
+    "@hapi/joi": "^15.1.0"
   }
 }
