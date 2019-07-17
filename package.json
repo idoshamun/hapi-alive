@@ -1,6 +1,6 @@
 {
   "name": "hapi-alive",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Health route for your Hapi.js server",
   "main": "lib/index.js",
   "scripts": {
