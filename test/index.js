@@ -1,6 +1,6 @@
 'use strict';
 
-const Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 const Code = require('code');
 const Lab = require('lab');
 const Alive = require('../');
