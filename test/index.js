@@ -2,7 +2,7 @@
 
 const Hapi = require('@hapi/hapi');
 const Code = require('code');
-const Lab = require('lab');
+const Lab = require('@hapi/lab');
 const Alive = require('../');
 
 const lab = exports.lab = Lab.script();
