@@ -30,7 +30,7 @@
   "dependencies": {
     "@hapi/boom": "^7.4.2",
     "@hapi/eslint-config-hapi": "^13.0.2",
-    "@hapi/hoek": "^8.0.2",
+    "@hapi/hoek": "^9.0.4",
     "@hapi/joi": "^15.1.0",
     "@hapi/lab": "^22.0.4"
   }
