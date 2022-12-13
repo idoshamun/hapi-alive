@@ -4,7 +4,7 @@
   "description": "Health route for your Hapi.js server",
   "main": "lib/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/lab -a code -t 100 -L -r console -o stdout -r lcov -o coverage/lcov.info",
+    "test": "./node_modules/.bin/lab -a @hapi/code -t 100 -L -r console -o stdout -r lcov -o coverage/lcov.info",
     "test-html": "mkdir -p coverage && ./node_modules/.bin/lab -a code -t 100 -L -r html > coverage/index.html"
   },
   "repository": {
@@ -24,14 +24,14 @@
   },
   "homepage": "https://github.com/idoshamun/hapi-alive#readme",
   "devDependencies": {
-    "@hapi/hapi": "^18.4.1",
-    "code": "^5.2.4"
+    "@hapi/code": "^9.0.2",
+    "@hapi/eslint-plugin": "^6.0.0",
+    "@hapi/hapi": "^21.1.0",
+    "@hapi/lab": "^25.0.1"
   },
   "dependencies": {
-    "@hapi/boom": "^7.4.2",
-    "@hapi/eslint-config-hapi": "^13.0.2",
-    "@hapi/hoek": "^8.0.2",
-    "@hapi/joi": "^15.1.0",
-    "@hapi/lab": "^22.0.4"
+    "@hapi/boom": "^10.0.0",
+    "@hapi/hoek": "^11.0.1",
+    "joi": "^17.7.0"
   }
 }
